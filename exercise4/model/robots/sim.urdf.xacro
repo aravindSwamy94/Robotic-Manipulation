@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<robot name="lumi" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
+    <xacro:include filename="$(find exercise4)/model/robots/hand.xacro"/>
+    <!--<xacro:include filename="$(find franka_description)/robots/hand.xacro"/>-->
+
+    <mujoco>
+        <compiler meshdir="../meshes/" balanceinertia="true" discardvisual="true"/>
+        <option cone="elliptic" impratio="10">
+            <geom friction="1.5 0.005 0.0001" solimp="0.99 0.99 0.01" solref="0.01 1"/>
+        </option>
+    </mujoco>
+
+    <link name="base_link"/>
+
+    <link name="floor">
+        <visual>
+            <geometry>
+                <box size="2 2 0.1"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="2 2 0.1"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </collision>
+    </link>
+    <joint name="floor_joint" type="fixed">
+        <origin xyz="0 0 -0.051" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="floor"/>
+    </joint>
+
+    <xacro:panda_arm connected_to="base_link" arm_id="lumi"/>
+    <xacro:hand ns="lumi" rpy="0 0 ${-pi/4}" connected_to="lumi_link8"/>
+
+    <link name="lumi_ee"/>
+    <joint name="ee_fjoint" type="fixed">
+        <origin xyz="0 0 ${0.058 * 2}" rpy="0 0 0"/>
+        <parent link="lumi_hand"/>
+        <child link="lumi_ee"/>
+    </joint>
+
+
+    <link name="box">
+        <visual>
+            <geometry>
+                <box size="0.05 0.05 0.2"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="0.05 0.05 0.2"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </collision>
+    </link>
+    <joint name="box_joint" type="fixed">
+        <origin xyz="0 0 0.22" rpy="0 0 0"/>
+        <parent link="lumi_link8"/>
+        <child link="box"/>
+    </joint>
+
+</robot>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="rviz" default="true"/>
+    <arg name="planning_pipeline" default="ompl"/>
+
+    <!-- publish the robot state (tf transforms) -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+    <include file="$(find lumi_moveit_config)/launch/move_group.launch">
+        <arg name="publish_monitored_planning_scene" value="true"/>
+        <arg name="planning_pipeline" value="$(arg planning_pipeline)"/>
+    </include>
+
+    <include file="$(find lumi_moveit_config)/launch/moveit_rviz.launch" if="$(arg rviz)">
+        <arg name="config" value="true"/>
+    </include>
+
+    <!-- Set dynamic reconfigure parameters for moveit -->
+    <node name="$(anon dynparam_execution_duration_monitoring)" pkg="dynamic_reconfigure" type="dynparam"
+          args="set_from_parameters move_group/trajectory_execution">
+        <param name="execution_duration_monitoring" type="bool" value="false"/>
+    </node>
+
+    <node name="$(anon dynparam_maximum_waypoint_distance)" pkg="dynamic_reconfigure" type="dynparam"
+          args="set_from_parameters move_group/ompl">
+        <param name="maximum_waypoint_distance" type="double" value="0.1"/>
+    </node>
+
+    <node name="$(anon dynparam_simplify_solutions)" pkg="dynamic_reconfigure" type="dynparam"
+          args="set_from_parameters move_group/ompl">
+        <param name="simplify_solutions" type="bool" value="true"/>
+    </node>
+
+   <node name="$(anon dynparam_start_state_tolerance)" pkg="dynamic_reconfigure" type="dynparam"
+          args="set_from_parameters move_group/trajectory_execution">
+        <param name="allowed_start_tolerance" type="double" value="0.05"/>
+    </node>
+</launch>

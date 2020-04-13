@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="lumi" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
+    <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
+
+    <mujoco>
+        <compiler meshdir="../meshes/" balanceinertia="true"/>
+    </mujoco>
+
+    <link name="base_link" />
+
+    <xacro:panda_arm connected_to="base_link" arm_id="lumi"/>
+    <xacro:hand ns="lumi" rpy="0 0 ${-pi/4}" connected_to="lumi_link8"/>
+
+    <link name="lumi_ee"/>
+    <joint name="ee_fjoint" type="fixed">
+        <origin xyz="0 0 ${0.058 * 2}" rpy="0 0 0"/>
+        <parent link="lumi_hand"/>
+        <child link="lumi_ee"/>
+    </joint>
+
+</robot>

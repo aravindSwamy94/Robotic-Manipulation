@@ -1,0 +1,79 @@
+<mujoco model="lumi">
+    <compiler angle="radian" meshdir="../meshes/" />
+    <size njmax="500" nconmax="100" />
+    <asset>
+        <mesh name="table" file="table.stl" />
+        <mesh name="link0" file="link0.stl" />
+        <mesh name="link1" file="link1.stl" />
+        <mesh name="link2" file="link2.stl" />
+        <mesh name="link3" file="link3.stl" />
+        <mesh name="link4" file="link4.stl" />
+        <mesh name="link5" file="link5.stl" />
+        <mesh name="link6" file="link6.stl" />
+        <mesh name="link7" file="link7.stl" />
+        <mesh name="hand" file="hand.stl" />
+        <mesh name="finger" file="finger.stl" />
+    </asset>
+    <worldbody>
+        <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="table" />
+        <geom name="table" type="mesh" mesh="table" />
+        <geom pos="-0.4 0.15 0" type="mesh" contype="0" conaffinity="0" group="1" mesh="link0" />
+        <geom pos="-0.4 0.15 0" type="mesh" mesh="link0" />
+        <body name="lumi_link1" pos="-0.4 0.15 0.333">
+            <inertial pos="1.1399e-05 -0.0312655 -0.0693733" quat="0.98466 0.174481 -0.000101815 0.000347662" mass="2.77281" diaginertia="0.0164224 0.0153969 0.00546286" />
+            <joint name="lumi_joint1" pos="0 0 0" axis="0 0 1" limited="true" range="-2.8973 2.8973" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="link1" />
+            <geom type="mesh" mesh="link1" />
+            <body name="lumi_link2" pos="0 0 0" quat="0.707107 -0.707107 0 0">
+                <inertial pos="-1.31766e-05 -0.0703216 0.0311782" quat="0.57484 0.818266 -6.05764e-05 -6.61626e-05" mass="2.7996" diaginertia="0.016787 0.0157415 0.00553027" />
+                <joint name="lumi_joint2" pos="0 0 0" axis="0 0 1" limited="true" range="-1.7628 1.7628" />
+                <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="link2" />
+                <geom type="mesh" mesh="link2" />
+                <body name="lumi_link3" pos="0 -0.316 0" quat="0.707107 0.707107 0 0">
+                    <inertial pos="0.0443483 0.0249283 -0.03813" quat="0.0615263 0.349824 0.234291 0.904956" mass="2.14603" diaginertia="0.00915257 0.00896477 0.00384742" />
+                    <joint name="lumi_joint3" pos="0 0 0" axis="0 0 1" limited="true" range="-2.8973 2.8973" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="link3" />
+                    <geom type="mesh" mesh="link3" />
+                    <body name="lumi_link4" pos="0.0825 0 0" quat="0.707107 0.707107 0 0">
+                        <inertial pos="-0.0385503 0.0395256 0.0247162" quat="0.813566 0.465041 0.309792 0.160858" mass="2.18807" diaginertia="0.00946899 0.00928491 0.00396694" />
+                        <joint name="lumi_joint4" pos="0 0 0" axis="0 0 1" limited="true" range="-3.0718 -0.0698" />
+                        <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="link4" />
+                        <geom type="mesh" mesh="link4" />
+                        <body name="lumi_link5" pos="-0.0825 0.384 0" quat="0.707107 -0.707107 0 0">
+                            <inertial pos="-6.36776e-05 0.0384124 -0.10997" quat="0.990767 -0.135571 0.000963106 0.000694406" mass="3.19545" diaginertia="0.0278873 0.0268823 0.00569569" />
+                            <joint name="lumi_joint5" pos="0 0 0" axis="0 0 1" limited="true" range="-2.8973 2.8973" />
+                            <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="link5" />
+                            <geom type="mesh" mesh="link5" />
+                            <body name="lumi_link6" pos="0 0 0" quat="0.707107 0.707107 0 0">
+                                <inertial pos="0.0510023 0.00693267 0.00616899" quat="-0.0460841 0.754362 0.044494 0.653325" mass="1.35761" diaginertia="0.00412168 0.0033698 0.00213304" />
+                                <joint name="lumi_joint6" pos="0 0 0" axis="0 0 1" limited="true" range="-0.0175 3.7525" />
+                                <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="link6" />
+                                <geom type="mesh" mesh="link6" />
+                                <body name="lumi_link7" pos="0.088 0 0" quat="0.707107 0.707107 0 0">
+                                    <inertial pos="0.00370456 0.00370629 0.111054" quat="0.255962 0.284553 0.687036 0.617653" mass="1.08813" diaginertia="0.00355525 0.00277167 0.00141387" />
+                                    <joint name="lumi_joint7" pos="0 0 0" axis="0 0 1" limited="true" range="-2.8973 2.8973" />
+                                    <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="link7" />
+                                    <geom type="mesh" mesh="link7" />
+                                    <geom pos="0 0 0.107" quat="0.92388 0 0 -0.382683" type="mesh" contype="0" conaffinity="0" group="1" mesh="hand" />
+                                    <geom pos="0 0 0.107" quat="0.92388 0 0 -0.382683" type="mesh" mesh="hand" />
+                                    <body name="lumi_leftfinger" pos="0 0 0.1654" quat="0.92388 0 0 -0.382683">
+                                        <inertial pos="-2.42335e-05 0.0119585 0.0237816" quat="0.996177 0.0868631 -2.79377e-05 -0.00926642" mass="0.0218754" diaginertia="5.69661e-06 5.56035e-06 1.55183e-06" />
+                                        <joint name="lumi_finger_joint1" pos="0 0 0" axis="0 1 0" type="slide" limited="true" range="0 0.04" />
+                                        <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="finger" />
+                                        <geom type="mesh" mesh="finger" />
+                                    </body>
+                                    <body name="lumi_rightfinger" pos="0 0 0.1654" quat="0.92388 0 0 -0.382683">
+                                        <inertial pos="2.42335e-05 -0.0119585 0.0237816" quat="0.996177 -0.0868631 2.79377e-05 -0.00926642" mass="0.0218754" diaginertia="5.69661e-06 5.56035e-06 1.55183e-06" />
+                                        <joint name="lumi_finger_joint2" pos="0 0 0" axis="0 -1 0" type="slide" limited="true" range="0 0.04" />
+                                        <geom quat="0 0 0 1" type="mesh" contype="0" conaffinity="0" group="1" mesh="finger" />
+                                        <geom quat="0 0 0 1" type="mesh" mesh="finger" />
+                                    </body>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+</mujoco>

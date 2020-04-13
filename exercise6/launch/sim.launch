@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) Aalto  - All Rights Reserved
+Created on: 2/8/19
+    Author: Vladimir Petrik <vladimir.petrik@aalto.fi>
+   Details:
+-->
+
+<launch>
+    <arg name="load_gripper" default="true"/>
+    <arg name="grasp_force" default="1"/>
+    <arg name="lift_force" default="1"/>
+    <arg name="grasp_height" default="0.1"/>
+    <param name="grasp_data_file" type="str" value="$(find exercise6)/data/grasp_data.txt"/>
+    <param name="grasp_force" type="double" value="$(arg grasp_force)"/>
+    <param name="grasp_height" type="double" value="$(arg grasp_height)"/>
+    <group ns="lumi_mujoco">
+        <rosparam command="load" file="$(find exercise6)/config/controllers.yaml"/>
+    </group>
+    <include file="$(find exercise6)/launch/simulation.launch">
+        <arg name="mujoco_model" value="$(find exercise6)/model/robots/sim_mujoco.urdf"/>
+        <arg name="model" value="$(find exercise6)/model/robots/sim_ros.urdf"/>
+        <arg name="load_gripper" value="$(arg load_gripper)"/>
+        <arg name="compensate_bias" value="true"/>
+        <arg name="bias_error" value="1.0"/>
+    </include>
+</launch>

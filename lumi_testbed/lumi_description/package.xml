@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>lumi_description</name>
+    <version>0.0.1</version>
+    <description>
+        Package lumi_description contains urdf and xacro files describing the environment and robot.
+    </description>
+    <maintainer email="vladimir.petrik@aalto.fi">Vladimir Petrik</maintainer>
+    <license>BSD</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+    <buildtool_depend>catkin_simple</buildtool_depend>
+
+    <depend>urdf</depend>
+    <depend>xacro</depend>
+    <depend>franka_description</depend>
+
+</package>

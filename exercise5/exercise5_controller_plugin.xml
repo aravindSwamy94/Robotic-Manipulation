@@ -1,0 +1,10 @@
+<library path="lib/libexercise5controller">
+
+    <class name="exercise5/Exercise5Controller" type="Exercise5Controller"
+           base_class_type="controller_interface::ControllerBase">
+        <description>
+            The controller applying constant force in one axis.
+        </description>
+    </class>
+
+</library>

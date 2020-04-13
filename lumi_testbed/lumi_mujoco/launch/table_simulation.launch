@@ -1,0 +1,42 @@
+<launch>
+
+    <arg name="rviz" default="true"/>
+
+    <arg name="urdf_model" default="$(find lumi_description)/robots/robot_table_env.urdf"/>
+    <arg name="xml_model" default="$(find lumi_description)/robots/robot_table_env.xml"/>
+
+    <arg name="grasp_name" default="cup1"/>
+
+    <arg name="look_at_x" default="0.44"/>
+    <arg name="look_at_y" default="2.32"/>
+    <arg name="look_at_z" default="-2.4"/>
+
+    <param name="robot_description" textfile="$(arg urdf_model)"/>
+
+    <group ns="lumi_mujoco">
+        <rosparam command="load" file="$(find lumi_mujoco)/config/controllers.yaml"/>
+        <arg name="controllers" default="joint_state_controller trajectory_controller gripper_controller"/>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+              args="$(arg controllers)"/>
+
+        <node pkg="topic_tools" type="relay" name="relay_joint_state" args="joint_states /joint_states"/>
+    </group>
+
+    <node name="lumi_mujoco" type="mujoco_control" pkg="mujoco_ros_control" output="screen">
+        <param name="model" value="$(arg xml_model)"/>
+        <param name="look_at_x" value="$(arg look_at_x)"/>
+        <param name="look_at_y" value="$(arg look_at_y)"/>
+        <param name="look_at_z" value="$(arg look_at_z)"/>
+        <param name="grasp_name" value="$(arg grasp_name)"/>
+        <remap from="/lumi_mujoco/trajectory_controller/follow_joint_trajectory" to="/lumi_arm_controller/follow_joint_trajectory"/>
+        <remap from="/lumi_mujoco/gripper_controller/gripper_cmd" to="/lumi_hand_controller/gripper_action"/>
+        <param name="lumi_joint4_init" value="-1.5708"/>
+        <param name="lumi_joint6_init" value="1.5708"/>
+    </node>
+
+    <!--Load Move Group Interface -->
+    <include file="$(find lumi_moveit_config)/launch/lumi_moveit.launch">
+        <arg name="rviz" value="$(arg rviz)"/>
+    </include>
+
+</launch>

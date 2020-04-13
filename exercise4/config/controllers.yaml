@@ -1,0 +1,12 @@
+
+exercise4_controller:
+  type: exercise4/Exercise4Controller
+
+  joints:
+    - lumi_joint1
+    - lumi_joint2
+    - lumi_joint3
+    - lumi_joint4
+    - lumi_joint5
+    - lumi_joint6
+    - lumi_joint7

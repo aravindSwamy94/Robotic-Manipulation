@@ -1,0 +1,13 @@
+<!--
+Copyright (c) Aalto  - All Rights Reserved
+Created on: 11/23/18
+    Author: Vladimir Petrik <vladimir.petrik@aalto.fi>
+   Details:
+-->
+<launch>
+
+    <include file="$(find lumi_mujoco)/launch/simulation.launch">
+        <arg name="mujoco_model" value="$(find exercise3)/model/robots/sim.urdf"/>
+    </include>
+
+</launch>

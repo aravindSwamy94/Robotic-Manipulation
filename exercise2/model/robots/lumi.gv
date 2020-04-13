@@ -1,0 +1,47 @@
+digraph G {
+node [shape=box];
+"base_link" [label="base_link"];
+"floor" [label="floor"];
+"lumi_link0" [label="lumi_link0"];
+"lumi_link1" [label="lumi_link1"];
+"lumi_link2" [label="lumi_link2"];
+"lumi_link3" [label="lumi_link3"];
+"lumi_link4" [label="lumi_link4"];
+"lumi_link5" [label="lumi_link5"];
+"lumi_link6" [label="lumi_link6"];
+"lumi_link7" [label="lumi_link7"];
+"lumi_link8" [label="lumi_link8"];
+"lumi_hand" [label="lumi_hand"];
+"lumi_ee" [label="lumi_ee"];
+"lumi_leftfinger" [label="lumi_leftfinger"];
+"lumi_rightfinger" [label="lumi_rightfinger"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_link" -> "floor_joint" [label="xyz: 0 0 -0.051 \nrpy: 0 -0 0"]
+"floor_joint" -> "floor"
+"base_link" -> "lumi_joint_base_link" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"lumi_joint_base_link" -> "lumi_link0"
+"lumi_link0" -> "lumi_joint1" [label="xyz: 0 0 0.333 \nrpy: 0 -0 0"]
+"lumi_joint1" -> "lumi_link1"
+"lumi_link1" -> "lumi_joint2" [label="xyz: 0 0 0 \nrpy: -1.5708 0 0"]
+"lumi_joint2" -> "lumi_link2"
+"lumi_link2" -> "lumi_joint3" [label="xyz: 0 -0.316 0 \nrpy: 1.5708 -0 0"]
+"lumi_joint3" -> "lumi_link3"
+"lumi_link3" -> "lumi_joint4" [label="xyz: 0.0825 0 0 \nrpy: 1.5708 -0 0"]
+"lumi_joint4" -> "lumi_link4"
+"lumi_link4" -> "lumi_joint5" [label="xyz: -0.0825 0.384 0 \nrpy: -1.5708 0 0"]
+"lumi_joint5" -> "lumi_link5"
+"lumi_link5" -> "lumi_joint6" [label="xyz: 0 0 0 \nrpy: 1.5708 -0 0"]
+"lumi_joint6" -> "lumi_link6"
+"lumi_link6" -> "lumi_joint7" [label="xyz: 0.088 0 0 \nrpy: 1.5708 -0 0"]
+"lumi_joint7" -> "lumi_link7"
+"lumi_link7" -> "lumi_joint8" [label="xyz: 0 0 0.107 \nrpy: 0 -0 0"]
+"lumi_joint8" -> "lumi_link8"
+"lumi_link8" -> "lumi_hand_joint" [label="xyz: 0 0 0 \nrpy: 0 0 -0.785398"]
+"lumi_hand_joint" -> "lumi_hand"
+"lumi_hand" -> "ee_fjoint" [label="xyz: 0 0 0.116 \nrpy: 0 -0 0"]
+"ee_fjoint" -> "lumi_ee"
+"lumi_hand" -> "lumi_finger_joint1" [label="xyz: 0 0 0.0584 \nrpy: 0 -0 0"]
+"lumi_finger_joint1" -> "lumi_leftfinger"
+"lumi_hand" -> "lumi_finger_joint2" [label="xyz: 0 0 0.0584 \nrpy: 0 -0 0"]
+"lumi_finger_joint2" -> "lumi_rightfinger"
+}

@@ -1,0 +1,20 @@
+<!--
+Copyright (c) Aalto  - All Rights Reserved
+Created on: 2/8/19
+    Author: Vladimir Petrik <vladimir.petrik@aalto.fi>
+   Details:
+-->
+
+<launch>
+
+    <group ns="lumi_mujoco">
+        <rosparam command="load" file="$(find exercise5)/config/controllers.yaml"/>
+    </group>
+
+    <include file="$(find lumi_mujoco)/launch/simulation.launch">
+        <arg name="model" value="$(find exercise5)/model/robots/sim.urdf"/>
+        <arg name="compensate_bias" value="true"/>
+        <arg name="bias_error" value="0.98"/>
+    </include>
+
+</launch>

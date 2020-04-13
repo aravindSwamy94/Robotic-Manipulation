@@ -1,0 +1,10 @@
+<library path="lib/libexercise4controller">
+
+    <class name="exercise4/Exercise4Controller" type="Exercise4Controller"
+           base_class_type="controller_interface::ControllerBase">
+        <description>
+            The controller applying constant force in one axis.
+        </description>
+    </class>
+
+</library>

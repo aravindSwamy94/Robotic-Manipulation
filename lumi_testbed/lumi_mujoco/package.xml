@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>lumi_mujoco</name>
+    <version>0.0.1</version>
+    <description>
+        Package lumi_mujoco.
+    </description>
+    <maintainer email="vladimir.petrik@aalto.fi">Vladimir Petrik</maintainer>
+    <license>BSD</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+    <buildtool_depend>catkin_simple</buildtool_depend>
+
+    <depend>lumi_description</depend>
+    <depend>mujoco_ros_control</depend>
+    <depend>control_msgs</depend>
+    <depend>roscpp</depend>
+    <depend>actionlib</depend>
+
+</package>

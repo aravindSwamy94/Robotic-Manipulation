@@ -1,0 +1,115 @@
+
+exercise5_lumi1_controller:
+  type: exercise5/Exercise5Controller
+
+  joints:
+    - lumi1_joint1
+    - lumi1_joint2
+    - lumi1_joint3
+    - lumi1_joint4
+    - lumi1_joint5
+    - lumi1_joint6
+    - lumi1_joint7
+
+exercise5_lumi2_controller:
+  type: exercise5/Exercise5Controller
+
+  joints:
+    - lumi2_joint1
+    - lumi2_joint2
+    - lumi2_joint3
+    - lumi2_joint4
+    - lumi2_joint5
+    - lumi2_joint6
+    - lumi2_joint7
+joint_state_controller:
+        type: joint_state_controller/JointStateController
+        publish_rate: 50
+      
+      # Joint Trajectory Interface to MoveIt
+lumi1_trajectory_controller:
+        type: effort_controllers/JointTrajectoryController
+      
+        joints:
+        - lumi1_joint1
+        - lumi1_joint2
+        - lumi1_joint3
+        - lumi1_joint4
+        - lumi1_joint5
+        - lumi1_joint6
+        - lumi1_joint7
+      
+        gains: #PID controllers for individual joints
+          lumi1_joint1: {p: 2000,  d: 10, i: 300, i_clamp: 1000}
+          lumi1_joint2: {p: 2000,  d: 100, i: 400, i_clamp: 1000}
+          lumi1_joint3: {p: 2000,  d: 0, i: 300, i_clamp: 1000}
+          lumi1_joint4: {p: 2000,  d: 10, i: 200, i_clamp: 1000}
+          lumi1_joint5: {p: 200,  d: 3, i: 20, i_clamp: 100}
+          lumi1_joint6: {p: 200,  d: 3, i: 20, i_clamp: 100}
+          lumi1_joint7: {p: 200,  d: 2, i: 10, i_clamp: 100}
+     
+        constraints:
+          goal_time: 0.5
+        state_publish_rate:  25
+        action_monitor_rate: 30
+        stop_trajectory_duration: 0.01
+     
+lumi2_trajectory_controller:
+        type: effort_controllers/JointTrajectoryController
+      
+        joints:
+        - lumi2_joint1
+        - lumi2_joint2
+        - lumi2_joint3
+        - lumi2_joint4
+        - lumi2_joint5
+        - lumi2_joint6
+        - lumi2_joint7
+      
+        gains: #PID controllers for individual joints
+          lumi2_joint1: {p: 2000,  d: 10, i: 300, i_clamp: 1000}
+          lumi2_joint2: {p: 2000,  d: 100, i: 400, i_clamp: 1000}
+          lumi2_joint3: {p: 2000,  d: 0, i: 300, i_clamp: 1000}
+          lumi2_joint4: {p: 2000,  d: 10, i: 200, i_clamp: 1000}
+          lumi2_joint5: {p: 200,  d: 3, i: 20, i_clamp: 100}
+          lumi2_joint6: {p: 200,  d: 3, i: 20, i_clamp: 100}
+          lumi2_joint7: {p: 200,  d: 2, i: 10, i_clamp: 100}
+     
+        constraints:
+          goal_time: 0.5
+        state_publish_rate:  25
+        action_monitor_rate: 30
+        stop_trajectory_duration: 0.01
+     
+lumi1_trajectory_controller_fingers:
+        type: effort_controllers/JointTrajectoryController
+      
+        joints:
+        - lumi1_finger_joint1
+        - lumi1_finger_joint2
+      
+        gains:
+          lumi1_finger_joint1: {p: 1000,  d: 0, i: 0, i_clamp: 0}
+          lumi1_finger_joint2: {p: 1000,  d: 0, i: 0, i_clamp: 0}
+      
+        constraints:
+          goal_time: 0.5
+        state_publish_rate:  25
+        action_monitor_rate: 30
+lumi2_trajectory_controller_fingers:
+        type: effort_controllers/JointTrajectoryController
+      
+        joints:
+        - lumi2_finger_joint1
+        - lumi2_finger_joint2
+      
+        gains:
+          lumi2_finger_joint1: {p: 1000,  d: 0, i: 0, i_clamp: 0}
+          lumi2_finger_joint2: {p: 1000,  d: 0, i: 0, i_clamp: 0}
+      
+        constraints:
+          goal_time: 0.5
+        state_publish_rate:  25
+        action_monitor_rate: 30
+        stop_trajectory_duration: 0.01
+        stop_trajectory_duration: 0.01

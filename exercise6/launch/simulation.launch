@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) Aalto  - All Rights Reserved
+Created on: 11/13/18
+    Author: Vladimir Petrik <vladimir.petrik@aalto.fi>
+   Details:
+-->
+
+<launch>
+
+    <arg name="look_at_x" default="0.0"/>
+    <arg name="look_at_y" default="0.0"/>
+    <arg name="look_at_z" default="-0.051"/>
+    <arg name="azimuth" default="90"/>
+    <arg name="elevation" default="-30"/>
+
+    <arg name="load_gripper" default="true"/>
+    <arg name="rviz" default="true"/>
+
+    <arg name="model" default="$(find lumi_description)/robots/robot.urdf"/>
+    <arg name="mujoco_model" default="$(arg model)"/>
+
+    <!--Compensate bias forces in mujoco; If true the effort visible to ROS will not contains gravity/corollios/etc. forces -->
+    <arg name="compensate_bias" default="false"/>
+    <arg name="bias_error" default="1.0"/>
+
+    <param name="robot_description" textfile="$(arg model)"/>
+
+    <group if="$(arg load_gripper)">
+	    <group ns="lumi_mujoco">
+		<rosparam command="load" file="$(find exercise6)/config/controllers.yaml"/>
+		<arg name="controllers" default="joint_state_controller lumi1_trajectory_controller lumi1_trajectory_controller_fingers lumi2_trajectory_controller lumi2_trajectory_controller_fingers"/>
+		<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+		      args="$(arg controllers)"/>
+
+		<node pkg="topic_tools" type="relay" name="relay_joint_state" args="joint_states /joint_states"/>
+	    </group>
+
+    </group>
+ 
+   <node name="lumi_mujoco" type="mujoco_control" pkg="mujoco_ros_control" output="screen">
+        <param name="model" value="$(arg mujoco_model)"/>
+        <remap from="/lumi_mujoco/lumi1_trajectory_controller/follow_joint_trajectory"
+               to="/lumi1_arm_controller/follow_joint_trajectory"/>
+        <remap from="/lumi_mujoco/lumi1_trajectory_controller_fingers/follow_joint_trajectory"
+               to="/lumi1_hand_controller/follow_joint_trajectory"/>
+        <remap from="/lumi_mujoco/lumi2_trajectory_controller/follow_joint_trajectory"
+               to="/lumi2_arm_controller/follow_joint_trajectory"/>
+        <remap from="/lumi_mujoco/lumi2_trajectory_controller_fingers/follow_joint_trajectory"
+               to="/lumi2_hand_controller/follow_joint_trajectory"/>
+
+        <param name="lumi1_joint1_init" value="-1.8538020062505804"/>
+        <param name="lumi1_joint2_init" value="-0.9951056306254974"/>
+        <param name="lumi1_joint3_init" value="2.2408160867302"/>
+        <param name="lumi1_joint4_init" value="-2.61196372936"/>
+        <param name="lumi1_joint5_init" value="-2.628968407"/>
+        <param name="lumi1_joint6_init" value="1.7966179843"/>
+        <param name="lumi1_joint7_init" value="-2.422111446"/>
+
+        <param name="lumi2_joint1_init" value="1.566560479"/>
+        <param name="lumi2_joint2_init" value="-1.3873675"/>
+        <param name="lumi2_joint3_init" value="-2.1557750"/>
+        <param name="lumi2_joint4_init" value="-2.566267211"/>
+        <param name="lumi2_joint5_init" value="2.47078957529"/>
+        <param name="lumi2_joint6_init" value="2.044862524944"/>
+        <param name="lumi2_joint7_init" value="2.09852866"/>
+
+<!--       <param name="lumi1_joint4_init" value="-1.5708"/>-->
+<!--        <param name="lumi1_joint6_init" value="1.5708"/>-->
+        <param name="lumi1_finger_joint1_init" value="0.02"/>
+        <param name="lumi1_finger_joint2_init" value="0.02"/>
+<!--        <param name="lumi2_joint4_init" value="-1.5708"/>-->
+<!--        <param name="lumi2_joint6_init" value="1.5708"/>-->
+        <param name="lumi2_finger_joint1_init" value="0.02"/>
+        <param name="lumi2_finger_joint2_init" value="0.02"/>
+        <param name="look_at_x" value="$(arg look_at_x)"/>
+        <param name="look_at_y" value="$(arg look_at_y)"/>
+        <param name="look_at_z" value="$(arg look_at_z)"/>
+        <param name="azimuth" value="$(arg azimuth)"/>
+        <param name="elevation" value="$(arg elevation)"/>
+         <param name="compensate_bias" value="$(arg compensate_bias)"/>
+        <param name="bias_error" value="$(arg bias_error)"/>
+    </node>
+
+    <node name="lumi1_gripper_action_forwarding" type="gripper_action_to_trajectory_action" pkg="lumi_mujoco"
+	  output="screen">
+	<param name="robot_name" value="lumi1"/>
+	<remap from="/lumi1_gripper_action_forwarding/gripper_action" to="/lumi1_hand_controller/gripper_action"/>
+	<remap from="/lumi1_gripper_action_forwarding/follow_joint_trajectory"
+	       to="/lumi1_hand_controller/follow_joint_trajectory"/>
+    </node>
+    <node name="lumi2_gripper_action_forwarding" type="gripper_action_to_trajectory_action" pkg="lumi_mujoco"
+	  output="screen">
+	<param name="robot_name" value="lumi2"/>
+	<remap from="/lumi2_gripper_action_forwarding/gripper_action" to="/lumi2_hand_controller/gripper_action"/>
+	<remap from="/lumi2_gripper_action_forwarding/follow_joint_trajectory"
+	       to="/lumi2_hand_controller/follow_joint_trajectory"/>
+    </node>
+
+
+    <include file="$(find lumi_moveit_config)/launch/lumi_moveit.launch">
+        <arg name="rviz" value="$(arg rviz)"/>
+    </include>
+</launch>

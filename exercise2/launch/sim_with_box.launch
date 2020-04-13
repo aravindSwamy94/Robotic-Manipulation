@@ -1,0 +1,24 @@
+<!--
+Copyright (c) Aalto  - All Rights Reserved
+Created on: 1/21/19
+    Author: Vladimir Petrik <vladimir.petrik@aalto.fi>
+   Details:
+-->
+
+<launch>
+
+    <include file="$(find lumi_mujoco)/launch/simulation.launch">
+        <arg name="model" value="$(find exercise2)/model/robots/sim.urdf"/>
+    </include>
+
+    <node name="$(anon dynparam_maximum_waypoint_distance)" pkg="dynamic_reconfigure" type="dynparam"
+          args="set_from_parameters move_group/ompl">
+        <param name="maximum_waypoint_distance" type="double" value="0.5"/>
+    </node>
+
+    <node name="$(anon dynparam_simplify_solutions)" pkg="dynamic_reconfigure" type="dynparam"
+          args="set_from_parameters move_group/ompl">
+        <param name="simplify_solutions" type="bool" value="false"/>
+    </node>
+
+</launch>

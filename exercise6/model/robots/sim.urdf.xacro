@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<robot name="lumi" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
+    <xacro:include filename="$(find exercise6)/model/robots/hand.xacro"/>
+    <xacro:property name="boxSize" value="0.02 0.02 0.05" />
+    <mujoco>
+        <compiler meshdir="../meshes/" balanceinertia="true" discardvisual="true"/>
+        <option cone="elliptic" impratio="10">
+            <geom friction="1.5 0.005 0.0001" solimp="0.99 0.99 0.01" solref="0.01 1"/>
+        </option>
+    </mujoco>
+
+    <link name="base_link"/>
+
+    <link name="floor">
+        <visual>
+            <geometry>
+                <box size="2 2 0.1"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="2 2 0.1"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </collision>
+    </link>
+    <joint name="floor_joint" type="fixed">
+        <origin xyz="0 0 -0.051" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="floor"/>
+    </joint>
+
+
+    <xacro:panda_arm connected_to="base_link" arm_id="lumi1" xyz="0.7 0 0" rpy="0 0 ${pi}"/>
+    <xacro:panda_arm connected_to="base_link" arm_id="lumi2" xyz="-0.7 0 0"/>
+    <xacro:hand ns="lumi1" rpy="0 0 ${-pi/4}" connected_to="lumi1_link8"/>
+    <xacro:hand ns="lumi2" rpy="0 0 ${-pi/4}" connected_to="lumi2_link8"/>
+
+    <link name="lumi1_ee"/>
+    <joint name="ee1_fjoint" type="fixed">
+        <origin xyz="0 0 ${0.058 * 2}" rpy="0 0 0"/>
+        <parent link="lumi1_hand"/>
+        <child link="lumi1_ee"/>
+    </joint>
+    <link name="lumi2_ee"/>
+    <joint name="ee2_fjoint" type="fixed">
+        <origin xyz="0 0 ${0.058 * 2}" rpy="0 0 0"/>
+        <parent link="lumi2_hand"/>
+        <child link="lumi2_ee"/>
+    </joint>
+
+
+
+    <link name="box1">
+        <visual>
+            <geometry>
+                <box size="${boxSize}"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="${boxSize}"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </collision>
+    </link>
+    <joint name="box1_joint" type="fixed">
+        <origin xyz="0 0 0.14" rpy="0 0 0"/>
+        <parent link="lumi1_link8"/>
+        <child link="box1"/>
+    </joint>
+    <link name="box2">
+        <visual>
+            <geometry>
+		    <box size="${boxSize}"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="${boxSize}"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </collision>
+    </link>
+
+      <joint name="box2_joint" type="fixed">
+        <origin xyz="0 0 0.14" rpy="0 0 0"/>
+        <parent link="lumi2_link8"/>
+        <child link="box2"/>
+    </joint>
+
+    <link name="polygon">
+	<inertial>
+            <mass value="0.25"/>
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+        </inertial>
+
+        <visual>
+            <geometry>
+		    <mesh filename="package://exercise6/model/meshes/polygon.stl"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </visual>
+
+        <collision>
+            <geometry>
+		<mesh filename="package://exercise6/model/meshes/polygon.stl"/>
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </collision>
+    </link>
+    <joint name="polygon_joint" type="floating">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="polygon"/>
+        <dynamics damping="0.0" friction="0.2"/>
+    </joint>
+
+</robot>

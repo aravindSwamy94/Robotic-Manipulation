@@ -1,0 +1,21 @@
+<!--
+Created on: 12/14/18
+    Author: Vladimir Petrik <vladimir.petrik@aalto.fi>
+   Details: This file publishes two transformation into the tf server:
+            1) a transformation between the "base_link" frame and the "pick" frame;
+            2) a transformation between the "base_link" frame and the "place" frame.
+-->
+
+<launch>
+    <!--The transformation format: x y z qx qy qz qw source_frame target_frame publishing_period-->
+    <!-- (qx, qy, qz, qw)^T is a rotation in a quaternion representation -->
+
+    <!--The initial target location is specified by "pick" frame -->
+    <node pkg="tf" name="pick_publisher" type="static_transform_publisher"
+          args="0.75 0 0.025 0 0 0 1 base_link pick 100"/>
+
+    <!--The final target location is specified by "place" frame -->
+    <node pkg="tf" name="place_publisher" type="static_transform_publisher"
+          args="0.0 -0.5 0.2 0 0 0 1 base_link place 100"/>
+
+</launch>
